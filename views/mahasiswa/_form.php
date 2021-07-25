@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use kartik\date\DatePicker;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Mahasiswa */
@@ -17,7 +18,15 @@ use yii\widgets\ActiveForm;
     <?php $model->isNewRecord==1? $model->jenis_kelamin='L':$model->jenis_kelamin; ?>
 		<?= $form->field($model, 'jenis_kelamin')->radioList(array('Laki-Laki'=>'Laki-laki', 'Perempuan'=>'Perempuan'))->label('Jenis Kelamin') ?>
 
-    <?= $form->field($model, 'tanggal_lahir')->textInput() ?>
+    <?= $form->field($model, 'tanggal_lahir')->widget(DatePicker::classname(),[
+    'name' => 'dp_2',
+    'type' => DatePicker::TYPE_COMPONENT_PREPEND,
+    'value' => '2000-12-02',
+    'pluginOptions' => [
+        'autoclose'=>true,
+        'format' => 'yyyy-mm-dd'
+    ]
+    ]); ?>
 
     <?= $form->field($model, 'id_provinsi')->textInput() ?>
 
