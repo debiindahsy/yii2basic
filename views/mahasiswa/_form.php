@@ -3,6 +3,11 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use kartik\date\DatePicker;
+use kartik\depdrop\DepDrop;
+use app\models\Prodi;
+use app\models\Jurusan;
+use yii\helpers\Url;
+
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Mahasiswa */
@@ -32,9 +37,19 @@ use kartik\date\DatePicker;
 
     <?= $form->field($model, 'id_kota')->textInput() ?>
 
-    <?= $form->field($model, 'id_jurusan')->textInput() ?>
+    <?= $form->field($model, 'id_jurusan')->dropDownList(Jurusan::getJurusanList(),
+        ['id' => 'id_jurusan', 'prompt' => 'Pilih Jurusan']) 
+    ?>
 
-    <?= $form->field($model, 'id_prodi')->textInput() ?>
+    <?= $form->field($model, 'id_prodi')->widget(DepDrop::classname(), [
+        'options' => ['id' => 'prodi', 'prompt' => 'Pilih Prodi'],
+        'pluginOptions' => [
+            'depends' => ['id_jurusan'],
+            'placeholder' => 'Pilih Prodi',
+            'url' => Url::to(['mahasiswa/prodi'])
+        ]
+    ]) ?>
+
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

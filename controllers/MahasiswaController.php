@@ -8,6 +8,7 @@ use app\models\MahasiswaSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\models\Prodi;
 
 /**
  * MahasiswaController implements the CRUD actions for Mahasiswa model.
@@ -123,5 +124,19 @@ class MahasiswaController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public static function actionProdi(){
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        $out = [];
+        if(isset($_POST['depdrop_parents'])){
+            $parents = $_POST['depdrop_parents'];
+            if ($parents != null) {
+                $id_jurusan = $parents[0];
+                $out = Prodi::getProdiList($id_jurusan);
+                return ['output'=>$out, 'selected'=>''];
+            }
+        }
+        return ['output'=>'', 'selected'=>''];
     }
 }
